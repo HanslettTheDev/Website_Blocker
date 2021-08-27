@@ -9,7 +9,7 @@ list_of_websites = ["www.facebook.com", "www.gmail.com"] # Website block list
 # Use a while loop to run every milli second and check the date and time
 
 while True:
-    if dt(dt.now().year,dt.now().month,dt.now().day,7) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,16):
+    if dt(dt.now().year,dt.now().month,dt.now().day,9) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,16):
         print("Working")
         with open(temp_host, "r+") as file:
             hosts_content = file.read()
@@ -19,11 +19,13 @@ while True:
                 else:
                     file.write(redirect + " " + low + "\n")
     else:
-        print("Gaming")
-        with open(temp_host, "r+") as file:
+        with open(temp_host, 'r+') as file:
             hosts_content = file.readlines()
+            file.seek(2)
             for hc in hosts_content:
                 if not any(low in hc for low in list_of_websites):
                     file.write(hc)
+            file.truncate()
+        print("Gaming")
 
     time.sleep(5)
