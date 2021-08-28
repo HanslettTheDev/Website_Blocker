@@ -16,14 +16,14 @@ news_refactor = jw_soup.find_all('li', class_ = '')
 
 for news in news_refactor:
   print(news.select('a'))
-#   sites.append(news.get('href'))
+  sites.append(news.get('href'))
 
-# print(sites)yyy
+print(sites)
 
 
-# with open(link, "r+") as file:
-#   i = 0
-#   while i < len(sites):
-#     file.write(sites[i])
-#     file.write("\n")
-#     i += 1
+with open(link, "r+") as file:
+  i = 0
+  while i < len(sites):
+    file.write(sites[i])
+    file.write("\n")
+    i += 1
