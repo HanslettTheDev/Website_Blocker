@@ -4,6 +4,7 @@ from list_of_websites import website_block_list as wbl
 
 temp_host = "hosts"
 hosts_path = "C:\\Windows\\System32\\drivers\\etc\\hosts" # Path to the host file on windows
+# Mac Users and Linux ( hosts_path = "/etc/hosts/" )
 redirect = "127.0.0.1" # Link to redirect the user when the open a page which was added to the block list
 websites = wbl # Website block list
 
