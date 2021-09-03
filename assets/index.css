@@ -1,0 +1,26 @@
+body {
+    background-color: #1B262C;
+}
+
+button {
+    padding: 0.5rem;
+    background-color: #3a5a3b;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#panel-header, #main-header {
+    text-align: center;
+    padding: 3% 7%;
+}
+
+.panel-buttons {
+    padding: 3%;
+}
+
+.panel-buttons button, #main-header button {
+    margin-left: 5%;
+}
