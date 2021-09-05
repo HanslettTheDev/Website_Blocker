@@ -9,16 +9,23 @@
 </head>
 <body>
     <div id="panel-header">
-        <div class="panel-buttons">
-            <button class="btn btn-info">Add</button>
-            <button class="btn btn-info">Edit</button>
-            <button class="btn btn-info">Delete</button>
-        </div><br>
-        <textarea name="panel" id="panel" cols="50" rows="20"></textarea>
+        <form action="" method="POST">
+            <input type="url" name="url" id="url" minlength="1" required>
+            <div class="panel-buttons">
+                <button>Add</button>
+            </div><br>
+            <div class="panel" id="panel">
+                <ol type='1'>
+                    {% for l in url %}
+                    <li>{{ l }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </form>
     </div>
     <div id="main-header">
-        <button>Run blocker</button>
-        <button>Stop blocker</button>
+        <button class="primary">Run blocker</button>
+        <button class="warning">Stop blocker</button>
     </div>
     
 </body>

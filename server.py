@@ -1,6 +1,6 @@
 import json
 import os
-import webbrowser 
+import webbrowser
 from functools import wraps
 
 from flask import Flask, render_template, jsonify, request, url_for
@@ -15,11 +15,14 @@ server = Flask(__name__, static_folder=gui_dir, template_folder=gui_dir)
 server.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 # wait for the response from the json and verify the token
+# cache decorator
 def verify_token(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         data = json.loads(request.data)
+        print(data)
         token = data.get('token')
+        print(token)
         if token == webview.token:
             return function(*args, **kwargs)
         else:
@@ -33,7 +36,22 @@ def add_header(response):
     response.headers['Cache-Control'] = 'no-store'
     return response
 
-@server.route('/')
+@server.route('/', methods=["GET", "POST"])
 def home():
-    # Display the html page 
-    return render_template('index.html', token=webview.token)
+    url_link_name = "site.txt"
+
+    if request.method == 'POST':
+        url = request.form['url']
+        with open(url_link_name, 'a') as file:
+            file.write(url + "\n")
+    with open(url_link_name, "r") as f:
+        global web_url
+        web_url = f.readlines()
+    
+    return render_template('index.html', token=webview.token, url=web_url)
+
+def run_blocker():
+    pass
+
+def stop_blocker():
+    pass

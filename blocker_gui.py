@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 print(logger)
 
 if __name__ == '__main__':
-
     stream = StringIO()
     with redirect_stdout(stream):
         window = webview.create_window('Web Blocker', server)
