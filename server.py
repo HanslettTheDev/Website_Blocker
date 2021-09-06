@@ -1,7 +1,8 @@
 import json
 import os
-import webbrowser
 from functools import wraps
+from datetime import datetime as dt
+import sys 
 
 from flask import Flask, render_template, jsonify, request, url_for
 import webview
@@ -16,13 +17,16 @@ server.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 # wait for the response from the json and verify the token
 # cache decorator
+
+host_temp = "hosts"
+redirect = "127.0.0.1"
+
 def verify_token(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         data = json.loads(request.data)
-        print(data)
+        print(data,file=sys.stderr)
         token = data.get('token')
-        print(token)
         if token == webview.token:
             return function(*args, **kwargs)
         else:
@@ -39,19 +43,40 @@ def add_header(response):
 @server.route('/', methods=["GET", "POST"])
 def home():
     url_link_name = "site.txt"
-
-    if request.method == 'POST':
-        url = request.form['url']
-        with open(url_link_name, 'a') as file:
-            file.write(url + "\n")
     with open(url_link_name, "r") as f:
         global web_url
         web_url = f.readlines()
+
+    if request.method == 'POST':
+        if request.form.get('add'): 
+            url = request.form['url']
+            print(url,file=sys.stderr)
+            with open(url_link_name, 'a') as file:
+                file.write(url)
+                file.write("\n")
     
-    return render_template('index.html', token=webview.token, url=web_url)
-
-def run_blocker():
-    pass
-
-def stop_blocker():
-    pass
+    with open(url_link_name, 'r') as file:
+        global links
+        links = file.readlines()
+    
+    if request.method == 'POST':
+        if request.form.get('run'):
+            while True:
+                with open(host_temp, "r+") as file:
+                    hosts_content = file.read()
+                    for low in links:
+                        if low in hosts_content:
+                            pass
+                        else:
+                            file.write(redirect + " " + low + "\n")
+        elif request.form.get('stop'):
+            while True:
+                with open(host_temp, 'r+') as file:
+                    hosts_content = file.readlines()
+                    file.seek(0)
+                    for hc in hosts_content:
+                        if not any(website in hc for website in links):
+                            file.write(hc)
+                    file.truncate()
+    
+    return render_template('index.html', token=webview.token, url=links)

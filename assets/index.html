@@ -10,9 +10,9 @@
 <body>
     <div id="panel-header">
         <form action="" method="POST">
-            <input type="url" name="url" id="url" minlength="1" required>
+            <input type="text" name="url" id="url" minlength="1" required>
             <div class="panel-buttons">
-                <button>Add</button>
+                <button type="submit" name="add" value="add">Add</button>
             </div><br>
             <div class="panel" id="panel">
                 <ol type='1'>
@@ -24,8 +24,10 @@
         </form>
     </div>
     <div id="main-header">
-        <button class="primary">Run blocker</button>
-        <button class="warning">Stop blocker</button>
+        <form action="" method="POST">
+            <button type="submit" class="primary" name="run" value="run">Run Blocker</button>
+            <button type="submit" class="warning" name="stop" value="stop">Stop Blocker</button>
+        </form>
     </div>
     
 </body>

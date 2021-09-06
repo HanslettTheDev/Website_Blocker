@@ -12,4 +12,4 @@ if __name__ == '__main__':
     stream = StringIO()
     with redirect_stdout(stream):
         window = webview.create_window('Web Blocker', server)
-        webview.start()
+        webview.start(debug=True)

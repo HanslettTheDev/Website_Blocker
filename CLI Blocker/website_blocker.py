@@ -11,9 +11,9 @@ websites = wbl # Website block list
 # Use a while loop to run every milli second and check the date and time
 
 while True:
-    if dt(dt.now().year,dt.now().month,dt.now().day,12) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,16):
+    if dt(dt.now().year,dt.now().month,dt.now().day,15) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,16):
         print("Working")
-        with open(hosts_path, "r+") as file:
+        with open(temp_host, "r+") as file:
             hosts_content = file.read()
             for low in websites:
                 if low in hosts_content:
@@ -21,7 +21,7 @@ while True:
                 else:
                     file.write(redirect + " " + low + "\n")
     else:
-        with open(hosts_path, 'r+') as file:
+        with open(temp_host, 'r+') as file:
             hosts_content = file.readlines()
             file.seek(0)
             for hc in hosts_content:
