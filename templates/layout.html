@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" />
+</head>
+<body>
+
+    {% block content %}
+
+    {% endblock %}
+
+<script>
+
+        // create a collection of all the form elements into one variable and loop through 
+        // over them and add a submit event listener which then carries the response into one of 
+        // the json request then sent to the backend for execution
+
+        let add = document.getElementById('add');
+        let run = document.getElementById('run');
+        let stopblocker = document.getElementById('stop');
+
+        window.addEventListener("pywebviewready", ()=>{
+            window.pywebview.api.triggerJs()
+        })
+
+        function receiveResponse(response) {
+            let alert = document.getElementById('alert')
+            alert.innerText = response.message
+            alert.classList.add('alert alert-info')
+            alert.style.display = 'block'
+        }
+        
+        add.addEventListener('click', e=>{
+            let url = document.getElementById('url').value;
+            pywebview.api.saveTextToTextFile(url).then(receiveResponse)
+        })
+
+        run.addEventListener('click', e=>{
+            pywebview.api.runWebsiteBlocker().then(receiveResponse).catch(err=>alert('An error occured'))
+        })
+
+        stopblocker.addEventListener('click', e=>{
+            pywebview.api.stopWebsiteBlocker().then(receiveResponse).catch(err=>alert('an error occured'))
+        })
+
+</script>
+</body>
+</html>

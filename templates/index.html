@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div id="panel-header">
+        <form class="web-blocker-form">
+                <input type="text" class="url" id="url">
+                <button class="btn btn-success" id="add">Add website</button><br>
+                <button class="btn btn-success" id="run">Run blocker</button>
+                <button class="btn btn-danger" id="stop">Stop blocker</button><br>
+                <div class="panel" id="panel">
+                        {% for website in websites %}
+                        <li><a class="link-info off" href="{{ website }}">{{ website }}</a></li>
+                        <hr>
+                        {% endfor %}
+                </div>
+                <div id="alert"></div>
+        </form>
+</div>
+
+<div>
+
+</div>
+{% endblock %}
